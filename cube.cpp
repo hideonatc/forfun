@@ -37,11 +37,11 @@ void show_cube(){
 	return;
 }
 void rev(int s,int arg){
-	if(arg==1){	//順
+	if(arg==2){	
 		char m[3][3];
 		for(int i=0;i<3;i++)
 			for(int j=0;j<3;j++)
-				m[j][i]=cube[i+first[s][0]][j+first[s][1]];
+				m[i][j]=cube[j+first[s][0]][2-i+first[s][1]];
 		for(int i=0;i<3;i++)
 			for(int j=0;j<3;j++)
 				cube[i+first[s][0]][j+first[s][1]]=m[i][j];
@@ -50,7 +50,7 @@ void rev(int s,int arg){
 		char m[3][3];
 		for(int i=0;i<3;i++)
 			for(int j=0;j<3;j++)
-				m[j][2-i]=cube[i+first[s][0]][j+first[s][1]];
+				m[i][j]=cube[2-j+first[s][0]][i+first[s][1]];
 		for(int i=0;i<3;i++)
 			for(int j=0;j<3;j++)
 				cube[i+first[s][0]][j+first[s][1]]=m[i][j];
@@ -65,7 +65,7 @@ void move(int arg){
 			cube[3][i]=mem[i+3];
 			cube[3][3+i]=mem[i+6];
 			cube[3][6+i]=mem[i+9];
-			cube[11][i+3]=mem[2-i];
+			cube[11][5-i]=mem[i];
 		}
 	}
 	else if(arg==2){
@@ -75,27 +75,27 @@ void move(int arg){
 			cube[3][i]=mem[i+9];
 			cube[3][i+3]=mem[i];
 			cube[3][i+6]=mem[i+3];
-			cube[11][i+3]=mem[8-i];
+			cube[11][5-i]=mem[i+6];
 		}
 	}
 	else if(arg==3){
 		rev(2,1);
-		char mem[12]={cube[0][3],cube[1][3],cube[2][3],cube[3][3],cube[4][3],cube[5][3],cube[6][3],cube[7][3],cube[8][3],cube[5][8],cube[4][8],cube[3][8]};
+		char mem[12]={cube[0][3],cube[1][3],cube[2][3],cube[3][3],cube[4][3],cube[5][3],cube[6][3],cube[7][3],cube[8][3],cube[9][3],cube[10][3],cube[11][3]};
 		for(int i=0;i<3;i++){
 			cube[i][3]=mem[i+9];
 			cube[i+3][3]=mem[i];
 			cube[i+6][3]=mem[i+3];
-			cube[i+3][8]=mem[8-i];
+			cube[i+9][3]=mem[i+6];
 		}
 	}
 	else if(arg==4){
 		rev(2,2);
-		char mem[12]={cube[0][3],cube[1][3],cube[2][3],cube[3][3],cube[4][3],cube[5][3],cube[6][3],cube[7][3],cube[8][3],cube[5][8],cube[4][8],cube[3][8]};
+		char mem[12]={cube[0][3],cube[1][3],cube[2][3],cube[3][3],cube[4][3],cube[5][3],cube[6][3],cube[7][3],cube[8][3],cube[9][3],cube[10][3],cube[11][3]};
 		for(int i=0;i<3;i++){
 			cube[i][3]=mem[i+3];
 			cube[i+3][3]=mem[i+6];
 			cube[i+6][3]=mem[i+9];
-			cube[i+3][8]=mem[2-i];
+			cube[i+9][3]=mem[i];
 		}
 	}
 	else if(arg==5){
@@ -237,7 +237,7 @@ void move(int arg){
 }
 void mess(){
 	srand(time(NULL));
-	for(int i=1;i<=2;i++){
+	for(int i=1;i<=10;i++){
 		move((rand()%18)+1);
 	}
 	return;
@@ -262,14 +262,23 @@ void input(){
 int main(){
 	system("clear");
 	char c;
-	printf("solve mode (s)\nsimulate mode (m)\n");
+	printf("solve mode (s)\nsimulate mode (m)\nnormal mode (n)\n");
 	cin>>c;
 	set_cube();
 	system("clear");
 	if(c=='s')
 		mess();
-	else
+	else if(c=='m')
 		input();
+	else{
+		int k;
+		show_cube();
+		while(1){
+			cin>>k;
+			move(k);
+			show_cube();
+		}
+	}
 	int k;
 	show_cube();
 	while(!solve()){
