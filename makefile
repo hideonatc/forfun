@@ -3,7 +3,7 @@ SFML=-L usr/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfm
 cpp:$(f).cpp
 	g++	$(f).cpp	-o $(f)
 	$(path)$(f)
-	rm	$(f) $@
+	rm	$(f)
 sf:$(s).cpp
 	g++	$(s).cpp -o $(s) $(SFML)
 	./$(s)
