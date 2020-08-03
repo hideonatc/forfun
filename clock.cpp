@@ -56,8 +56,6 @@ int main(){
 	dot.setFillColor(sf::Color::Red);
 	dot.setPosition(235,95);
 	dot.setCharacterSize(170);
-	sf::Clock clock;
-	sf::Time now=clock.getElapsedTime();
 	mytime getit=gettime();
 	sf::RectangleShape sec(sf::Vector2f(3,-220)),min(sf::Vector2f(5,-190)),hr(sf::Vector2f(7,-170));
 	hr.setPosition(248,250);
@@ -81,7 +79,6 @@ int main(){
 		sec.setRotation(ptm->tm_sec*6);
 		min.setRotation(ptm->tm_min*6);
 		hr.setRotation((float(ptm->tm_min)/2+((ptm->tm_hour+8)%12)*30));
-		now=clock.getElapsedTime();
 		window.clear(sf::Color::Black);
 		//window.draw(circle);
 		change_color(window,circle,ptm->tm_sec,ptm->tm_min,(ptm->tm_hour+8)%12);
